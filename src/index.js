@@ -18,8 +18,6 @@ async function fetchData() {
     
     map.fitBounds(geoJson.getBounds());
     
-//    geoJson.openTooltip("kunta");
-//    L.tooltip())
 }
 
 function getFeature(feature, layer) {

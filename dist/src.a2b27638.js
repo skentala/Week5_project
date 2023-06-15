@@ -207,9 +207,6 @@ function _fetchData() {
             onEachFeature: getFeature
           }).addTo(map);
           map.fitBounds(geoJson.getBounds());
-
-          //    geoJson.openTooltip("kunta");
-          //    L.tooltip())
         case 10:
         case "end":
           return _context.stop();
