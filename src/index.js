@@ -9,11 +9,13 @@ async function fetchData() {
     
     let map = L.map('map', {
         minZoom: -3
-    })
+    });
     
     let geoJson = L.geoJSON(data, {
-        onEachFeature: getFeature,
-        style: getStyle
-    }).addTo(map)
+        weight: 2
+    }).addTo(map);
+    
+    map.fitBounds(geoJson.getBounds());
 }
 
+fetchData();

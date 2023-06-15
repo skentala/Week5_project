@@ -203,10 +203,10 @@ function _fetchData() {
             minZoom: -3
           });
           geoJson = L.geoJSON(data, {
-            onEachFeature: getFeature,
-            style: getStyle
+            weight: 2
           }).addTo(map);
-        case 9:
+          map.fitBounds(geoJson.getBounds());
+        case 10:
         case "end":
           return _context.stop();
       }
@@ -214,6 +214,7 @@ function _fetchData() {
   }));
   return _fetchData.apply(this, arguments);
 }
+fetchData();
 },{"./styles.css":"src/styles.css"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
