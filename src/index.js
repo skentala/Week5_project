@@ -12,10 +12,21 @@ async function fetchData() {
     });
     
     let geoJson = L.geoJSON(data, {
-        weight: 2
+        weight: 2,
+        onEachFeature: getFeature
     }).addTo(map);
     
     map.fitBounds(geoJson.getBounds());
+    
+//    geoJson.openTooltip("kunta");
+//    L.tooltip())
+}
+
+function getFeature(feature, layer) {
+    const id = feature.properties.id;
+    console.log(id);
+    layer.bindTooltip(feature.properties.nimi);
+    
 }
 
 fetchData();

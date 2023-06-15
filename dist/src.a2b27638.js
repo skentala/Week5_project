@@ -203,9 +203,13 @@ function _fetchData() {
             minZoom: -3
           });
           geoJson = L.geoJSON(data, {
-            weight: 2
+            weight: 2,
+            onEachFeature: getFeature
           }).addTo(map);
           map.fitBounds(geoJson.getBounds());
+
+          //    geoJson.openTooltip("kunta");
+          //    L.tooltip())
         case 10:
         case "end":
           return _context.stop();
@@ -213,6 +217,11 @@ function _fetchData() {
     }, _callee);
   }));
   return _fetchData.apply(this, arguments);
+}
+function getFeature(feature, layer) {
+  var id = feature.properties.id;
+  console.log(id);
+  layer.bindTooltip(feature.properties.nimi);
 }
 fetchData();
 },{"./styles.css":"src/styles.css"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
