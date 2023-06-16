@@ -181,33 +181,53 @@ function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyri
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 //https://geo.stat.fi/geoserver/wfs?service=WFS&version=2.0.0&request=GetFeature&typeName=tilastointialueet:kunta4500k&outputFormat=json&srsName=EPSG:4326
+
+var data2, data3;
 function fetchData() {
   return _fetchData.apply(this, arguments);
 }
 function _fetchData() {
   _fetchData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var url, res, data, map, geoJson;
+    var url1, url2, url3, res1, res2, res3, data1, map, geoJson;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          url = "https://geo.stat.fi/geoserver/wfs?service=WFS&version=2.0.0&request=GetFeature&typeName=tilastointialueet:kunta4500k&outputFormat=json&srsName=EPSG:4326";
-          _context.next = 3;
-          return fetch(url);
-        case 3:
-          res = _context.sent;
-          _context.next = 6;
-          return res.json();
-        case 6:
-          data = _context.sent;
+          url1 = "https://geo.stat.fi/geoserver/wfs?service=WFS&version=2.0.0&request=GetFeature&typeName=tilastointialueet:kunta4500k&outputFormat=json&srsName=EPSG:4326";
+          url2 = "https://statfin.stat.fi/PxWeb/sq/4bb2c735-1dc3-4c5e-bde7-2165df85e65f";
+          url3 = "https://statfin.stat.fi/PxWeb/sq/944493ca-ea4d-4fd9-a75c-4975192f7b6e";
+          _context.next = 5;
+          return fetch(url1);
+        case 5:
+          res1 = _context.sent;
+          _context.next = 8;
+          return fetch(url2);
+        case 8:
+          res2 = _context.sent;
+          _context.next = 11;
+          return fetch(url3);
+        case 11:
+          res3 = _context.sent;
+          _context.next = 14;
+          return res1.json();
+        case 14:
+          data1 = _context.sent;
+          _context.next = 17;
+          return res2.json();
+        case 17:
+          data2 = _context.sent;
+          _context.next = 20;
+          return res3.json();
+        case 20:
+          data3 = _context.sent;
           map = L.map('map', {
             minZoom: -3
           });
-          geoJson = L.geoJSON(data, {
+          geoJson = L.geoJSON(data1, {
             weight: 2,
             onEachFeature: getFeature
           }).addTo(map);
           map.fitBounds(geoJson.getBounds());
-        case 10:
+        case 24:
         case "end":
           return _context.stop();
       }
@@ -216,9 +236,12 @@ function _fetchData() {
   return _fetchData.apply(this, arguments);
 }
 function getFeature(feature, layer) {
-  var id = feature.properties.id;
-  console.log(id);
+  if (!feature.properties.nimi) return;
   layer.bindTooltip(feature.properties.nimi);
+  var index = "KU" + feature.properties.kunta;
+  var posMigration = data2.dataset.value[data2.dataset.dimension.Tuloalue.category.index[index]];
+  var negMigration = data3.dataset.value[data3.dataset.dimension.Lähtöalue.category.index[index]];
+  layer.bindPopup("<ul><li>Name: ".concat(feature.properties.nimi, "</li>") + "<li>Positive migration: ".concat(posMigration, "</li>") + "<li>Negative migration: ".concat(negMigration, "</li></ul>"));
 }
 fetchData();
 },{"./styles.css":"src/styles.css"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
