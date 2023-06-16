@@ -21,7 +21,8 @@ async function fetchData() {
     
     let geoJson = L.geoJSON(data1, {
         weight: 2,
-        onEachFeature: getFeature
+        onEachFeature: getFeature,
+        style: getStyle
     }).addTo(map);
     
     map.fitBounds(geoJson.getBounds());
@@ -43,6 +44,18 @@ function getFeature(feature, layer) {
     layer.bindPopup(`<ul><li>Name: ${feature.properties.nimi}</li>`+
                         `<li>Positive migration: ${posMigration}</li>`+
                         `<li>Negative migration: ${negMigration}</li></ul>`);
+}
+
+function getStyle(feature) {
+    if (!feature.properties.nimi) return;
+    let index = "KU" + feature.properties.kunta;
+    const posMigration = data2.dataset.value[data2.dataset.dimension.Tuloalue.category.index[index]];
+    const negMigration = data3.dataset.value[data3.dataset.dimension.Lähtöalue.category.index[index]];
+    const netMigration = posMigration - negMigration;
+    let hue = (posMigration / negMigration)^3 * 60;
+    if (hue > 120) hue = 120;
+    console.log(hue);
+//    return {color: hsl(hue, 75%, 50%)}
 }
 
 fetchData();

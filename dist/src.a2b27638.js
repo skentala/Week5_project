@@ -224,7 +224,8 @@ function _fetchData() {
           });
           geoJson = L.geoJSON(data1, {
             weight: 2,
-            onEachFeature: getFeature
+            onEachFeature: getFeature,
+            style: getStyle
           }).addTo(map);
           map.fitBounds(geoJson.getBounds());
           osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -247,6 +248,18 @@ function getFeature(feature, layer) {
   var negMigration = data3.dataset.value[data3.dataset.dimension.Lähtöalue.category.index[index]];
   layer.bindPopup("<ul><li>Name: ".concat(feature.properties.nimi, "</li>") + "<li>Positive migration: ".concat(posMigration, "</li>") + "<li>Negative migration: ".concat(negMigration, "</li></ul>"));
 }
+function getStyle(feature) {
+  if (!feature.properties.nimi) return;
+  var index = "KU" + feature.properties.kunta;
+  var posMigration = data2.dataset.value[data2.dataset.dimension.Tuloalue.category.index[index]];
+  var negMigration = data3.dataset.value[data3.dataset.dimension.Lähtöalue.category.index[index]];
+  var netMigration = posMigration - negMigration;
+  var hue = posMigration / negMigration ^ 3 * 60;
+  if (hue > 120) hue = 120;
+  console.log(hue);
+  //    return {color: hsl(hue, 75%, 50%)}
+}
+
 fetchData();
 },{"./styles.css":"src/styles.css"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
