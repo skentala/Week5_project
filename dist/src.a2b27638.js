@@ -188,7 +188,7 @@ function fetchData() {
 }
 function _fetchData() {
   _fetchData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var url1, url2, url3, res1, res2, res3, data1, map, geoJson;
+    var url1, url2, url3, res1, res2, res3, data1, map, geoJson, osm;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
@@ -227,7 +227,11 @@ function _fetchData() {
             onEachFeature: getFeature
           }).addTo(map);
           map.fitBounds(geoJson.getBounds());
-        case 24:
+          osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            maxZoom: 19,
+            attribution: "© OpenStreetMap"
+          }).addTo(map);
+        case 25:
         case "end":
           return _context.stop();
       }
