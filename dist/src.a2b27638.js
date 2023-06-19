@@ -254,12 +254,12 @@ function getStyle(feature) {
   var posMigration = data2.dataset.value[data2.dataset.dimension.Tuloalue.category.index[index]];
   var negMigration = data3.dataset.value[data3.dataset.dimension.Lähtöalue.category.index[index]];
   var netMigration = posMigration - negMigration;
-  var hue = posMigration / negMigration ^ 3 * 60;
+  var hue = Math.pow(posMigration / negMigration, 3) * 60;
   if (hue > 120) hue = 120;
-  console.log(hue);
-  //    return {color: hsl(hue, 75%, 50%)}
+  return {
+    color: "hsl(".concat(hue, ", 75%, 50%)")
+  };
 }
-
 fetchData();
 },{"./styles.css":"src/styles.css"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];

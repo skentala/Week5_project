@@ -52,10 +52,11 @@ function getStyle(feature) {
     const posMigration = data2.dataset.value[data2.dataset.dimension.Tuloalue.category.index[index]];
     const negMigration = data3.dataset.value[data3.dataset.dimension.Lähtöalue.category.index[index]];
     const netMigration = posMigration - negMigration;
-    let hue = (posMigration / negMigration)^3 * 60;
+    let hue = Math.pow(posMigration / negMigration,3) * 60;
     if (hue > 120) hue = 120;
-    console.log(hue);
-//    return {color: hsl(hue, 75%, 50%)}
+    return {
+        color: `hsl(${hue}, 75%, 50%)`
+    }
 }
 
 fetchData();
